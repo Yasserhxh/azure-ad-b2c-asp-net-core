@@ -19,12 +19,13 @@ namespace TestService.Controllers
         };
 
         // The Web API will only accept tokens 1) for users, and 2) having the "read_values" scope for this API
-        const string scopeRequiredByApi = "read_values";
+       // const string scopeRequiredByApi = "wacomosBack";
+        const string scopeRequiredByApi = "apim_scope";
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
+            HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
