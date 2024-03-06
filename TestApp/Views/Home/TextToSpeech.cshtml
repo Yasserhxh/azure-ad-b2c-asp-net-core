@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Profile Enrollment and Verification</title>
+</head>
+<body>
+    <h1>Voice Profile Enrollment and Verification</h1>
+    
+    <div id="phraseContainer">
+        <p id="phraseText">Phrase will appear here</p>
+        <button id="startRecording">Start Recording</button>
+    </div>
+    
+    <script>
+        document.getElementById('startRecording').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/enroll-verify-speaker', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    // Display success message and verification results
+                    document.getElementById('phraseText').textContent = 'Verification successful!';
+                } else {
+                    // Display error message and phrase counter
+                    document.getElementById('phraseText').textContent = `Error: ${data.phraseCounter} phrases remaining.`;
+                }
+            } catch (error) {
+                console.error(error);
+                // Display error message
+                document.getElementById('phraseText').textContent = 'An error occurred.';
+            }
+        });
+    </script>
+</body>
+</html>
